@@ -23,41 +23,26 @@ int testPort(char* ip, int port) {
 	return result;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 
-	int initialPort;
-	int finishPort;
+	if (argc == 1) {
+		printf("You need pass an IP\n\n");
+		printf(" [EXAMPLE] scan-ip 192.168.11.1\n\n");
+		return 0;
+	}
+
 	int test;
 	int port;
-	int counter;
-	char ip[20];
-
-	printf("Initial port: ");
-	scanf("%d", &initialPort);
-	printf("Finish port: ");
-	scanf("%d", &finishPort);
-	printf("Ip: ");
-	scanf("%s", &ip);
-
-	int openPorts[finishPort];
-	counter = 0;
+	char *ip = argv[1];
 
 	printf("\n\n[TESTING] searching for open ports\n\n");
 
-	for (port = initialPort; port <= finishPort; port++) {
+	for (port = 1; port <= 65536; port++) {
 		test = testPort(ip, port);
+
 		if (test == 0) {
-			openPorts[counter] = port;
-			counter++;
+			printf("[PORT] \t%d \tOPEN\n", port);
 		}
-	}
-
-	counter = 0;
-	printf("\n\n");
-
-	while ((port = openPorts[counter])) {
-		printf("[PORT] %d OPEN\n", port);
-		counter++;
 	}
 
 	return 0;
